@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>璇婃柇椤甸潰</title>
+<style>
+body{background:#0a0e17;color:#e2e8f0;font-family:"Microsoft YaHei",sans-serif;padding:20px}
+.pass{color:#4ade80}.fail{color:#ef4444}.warn{color:#f59e0b}
+pre{background:#111827;padding:12px;border-radius:8px;margin:8px 0}
+</style>
+</head>
+<body>
+<h1>璇婃柇鎶ュ憡</h1>
+<div id="results"></div>
+<script>
+var results=[];
+function log(msg,status){results.push({msg:msg,status:status});document.getElementById("results").innerHTML=results.map(function(r){return '<p class='+r.status+'>['+r.status.toUpperCase()+'] '+r.msg+'</p>'}).join('')}
+
+log("JS寮€濮嬫墽琛?,"pass");
+
+// Test 1: Basic JS
+try{
+var x=1+1;
+log("鍩虹JS鎵ц姝ｅ父","pass");
+}catch(e){log("鍩虹JS閿欒: "+e.message,"fail")}
+
+// Test 2: Fetch API
+fetch("/api/matches").then(function(r){
+log("Fetch 鎴愬姛: HTTP "+r.status,"pass");
+return r.json();
+}).then(function(d){
+log("JSON瑙ｆ瀽鎴愬姛: "+d.matches.length+" 鍦烘瘮璧?,"pass");
+var m=d.matches[0];
+log("姣旇禌鏁版嵁: "+m.home+" vs "+m.away+" HW="+m.hw+"%","pass");
+log("姣斿垎鏁版嵁: "+(m.scores||[]).length+" 鏉?,"pass");
+log("鎬昏繘鐞冩暟鎹? "+(m.tg||[]).length+" 鏉?,"pass");
+log("鍗婂叏鍦烘暟鎹? "+(m.hf||[]).length+" 鏉?,"pass");
+}).catch(function(e){
+log("Fetch澶辫触: "+e.message,"fail");
+});
+
+// Test 3: DOM manipulation
+try{
+var div=document.createElement("div");
+div.innerHTML="<span class=pass>DOM鎿嶄綔姝ｅ父</span>";
+document.getElementById("results").appendChild(div);
+log("DOM鎿嶄綔姝ｅ父","pass");
+}catch(e){log("DOM閿欒: "+e.message,"fail")}
+
+// Test 4: Check data from main app
+setTimeout(function(){
+try{
+var d2=document.getElementById("main-content");
+log("main-content鍏冪礌: "+(d2?"瀛樺湪":"涓嶅瓨鍦?),d2?"pass":"warn");
+}catch(e){log("鍏冪礌妫€鏌ラ敊璇? "+e.message,"fail")}
+},2000);
+
+log("璇婃柇瀹屾垚","pass");
+</script>
+</body>
+</html>
