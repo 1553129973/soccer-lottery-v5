@@ -710,7 +710,7 @@ def daily_refresh_thread():
                 for _n in [1,2,3,4]:
                     pldata[f"{_n}x1"] = generate_parlays(pdata, _n)
                 full = {"matches": mdata["matches"], "picks": pdata, "parlays": pldata, "date": mdata["date"]}
-                rpath = os.path.join(os.path.dirname(__file__), "standalone.html")
+                rpath = os.path.join(os.path.dirname(__file__), "index.html")
                 if os.path.exists(rpath):
                     with open(rpath, "r", encoding="utf-8") as _f:
                         _html = _f.read()
@@ -731,13 +731,13 @@ def daily_refresh_thread():
 @app.route("/")
 def index():
     import os as _os
-    report_path = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "standalone.html")
+    report_path = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "index.html")
     if _os.path.exists(report_path):
         with open(report_path, "r", encoding="utf-8") as f:
             html = f.read()
     else:
         # Fallback: try relative to CWD
-        alt_path = "standalone.html"
+        alt_path = "index.html"
         if _os.path.exists(alt_path):
             with open(alt_path, "r", encoding="utf-8") as f:
                 html = f.read()
