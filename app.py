@@ -627,9 +627,11 @@ def api_auto_learn():
     )
     return jsonify(result)
 
+# Auto-load on import (for gunicorn on Railway/Render)
+load_matches()
+start_scheduler(refresh_hour=14)
+
 if __name__ == '__main__':
-    load_matches()  # Fetch live data on startup
-    start_scheduler(refresh_hour=14)  # Auto-refresh daily at 14:00
     print("="*50)
     print("  瓒冲僵鍒嗘瀽鍔╂墜 V5")
     print("  http://127.0.0.1:5000")
