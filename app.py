@@ -942,7 +942,12 @@ def api_learn_stats():
     return jsonify(learner.get_stats())
 
 # Auto-load data on import (for gunicorn)
-get_cached_data()
+try:
+    get_cached_data()
+except Exception as e:
+    print(f"Warning: initial data load failed: {e}")
+    import traceback
+    traceback.print_exc()
 refresh_thread = threading.Thread(target=daily_refresh_thread, daemon=True)
 refresh_thread.start()
 
