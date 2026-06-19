@@ -946,6 +946,11 @@ get_cached_data()
 refresh_thread = threading.Thread(target=daily_refresh_thread, daemon=True)
 refresh_thread.start()
 
+
+@app.route("/health")
+def health():
+    return jsonify({"status": "ok", "time": str(__import__("datetime").datetime.now())})
+
 if __name__ == "__main__":
     print("⚽ 足彩分析助手已启动: http://127.0.0.1:5000")
     print("📅 每日14:00自动刷新次日赛程（北京时间）")
